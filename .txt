@@ -1,52 +1,53 @@
+#include <stdio.h>
+#include <string.h>
 
-*.d
+// Definindo uma estrutura para representar uma obra no museu
+struct ObraMuseu {
+    char titulo[100];
+    char artista[100];
+    float avaliacao;
+};
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+int main() {
+    int numObras;
+    printf("Quantas obras deseja avaliar no museu? ");
+    scanf("%d", &numObras);
 
-# Linker output
-*.ilk
-*.map
-*.exp
+    // Declarando um array de estruturas para armazenar as obras
+    struct ObraMuseu obras[numObras];
 
-# Precompiled Headers
-*.gch
-*.pch
+    // Preenchendo informações sobre as obras
+    for (int i = 0; i < numObras; i++) {
+        printf("Obra #%d:\n", i + 1);
+        printf("Título: ");
+        scanf(" %[^\n]s", obras[i].titulo); // Lê o título incluindo espaços em branco
+        printf("Artista: ");
+        scanf(" %[^\n]s", obras[i].artista); // Lê o nome do artista incluindo espaços em branco
+        obras[i].avaliacao = 0.0; // Inicializa a avaliação como 0
+    }
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+    // Exibindo informações e permitindo avaliações
+    int escolha;
+    do {
+        printf("\nEscolha uma obra para avaliar (1 a %d), 0 para sair: ", numObras);
+        scanf("%d", &escolha);
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+        if (escolha >= 1 && escolha <= numObras) {
+            printf("Avalie a obra '%s' de %s (0.0 a 10.0): ", obras[escolha - 1].titulo, obras[escolha - 1].artista);
+            scanf("%f", &obras[escolha - 1].avaliacao);
+        } else if (escolha != 0) {
+            printf("Escolha inválida. Tente novamente.\n");
+        }
+    } while (escolha != 0);
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+    // Exibindo todas as avaliações das obras
+    printf("\nAvaliações das Obras no Museu:\n");
+    for (int i = 0; i < numObras; i++) {
+        printf("Obra: %s\n", obras[i].titulo);
+        printf("Artista: %s\n", obras[i].artista);
+        printf("Avaliação: %.1f\n\n", obras[i].avaliacao);
+    }
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+    return 0;
+}
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
